@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <template id="redirect_form">
+        <form t-att-action="api_url" method="post">
+            <input type="hidden" name="reference" t-att-value="reference"/>
+            <input type="hidden" name="amount" t-att-value="amount"/>
+            <input type="hidden" name="currency" t-att-value="currency.name"/>
+        </form>
+    </template>
+
+    <record id="bbcs_pay_acquire.payment_acquirer_veem" model="payment.acquirer">
+        <field name="name">Veem</field>
+        <field name="provider">veem</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="image_128" type="base64" file="bbcs_veem_payment/static/src/img/veem_icon.png"/>
+        <field name="redirect_form_view_id" ref="redirect_form"/>       
+    </record>
+
+    <record id="payment_method_veem" model="account.payment.method">
+        <field name="name">Veem</field>
+        <field name="code">veem</field>
+        <field name="payment_type">outbound</field>
+    </record>
+</odoo>

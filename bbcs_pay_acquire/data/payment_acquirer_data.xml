@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="payment_acquirer_veem" model="payment.acquirer">
+        <field name="name">Veem</field>
+        <!-- <field name="display_as">Credit Card (powered by Veem)</field> -->
+        <field name="sequence">1</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="image_128" type="base64" file="bbcs_veem_payment/static/src/img/veem_icon.png"/>
+        <field name="module_id" ref="base.module_bbcs_veem_payment"/>
+        <field name="description" type="html">
+            <p>
+                Veem is the easiest way to accept payments via Veem platform
+            </p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><i class="fa fa-check"/>Online Payment</li>
+                <li class="list-inline-item"><i class="fa fa-check"/>Payment Status Tracking</li>
+            </ul>
+        </field>
+        
+    </record>
+</odoo>
