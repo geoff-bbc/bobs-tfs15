@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><data>
+    <record id="account_move_veem" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <button name="action_invoice_sent" position="after">
+                <button name="action_process_veem_invoice" string="Send Veem Invoice" type="object" groups="account.group_account_invoice" 
+                    attrs="{'invisible': ['|', '|', '|', '|',('veem_state','=','sent'), ('veem_send_invoice_radio','=','no'), ('state', '!=', 'posted'), ('is_move_sent', '=', True), ('move_type', 'not in', ('out_invoice', 'out_refund'))]}" class="oe_highlight"/>
+                </button>
+            <group name="sale_info_group" position="after">
+                <group id="veem_invoice" name="veem_tab" string="Veem" attrs="{'invisible': [('veem_invoice_id', '=', False)]}">
+                    <field name="veem_invoice_id" attrs="{'invisible': [('veem_invoice_id', '=', False)]}"/>
+                    <!-- <field name="veem_payment_id" attrs="{'invisible': [('veem_payment_id', '=', False)]}"/> -->
+                    <field name="veem_state"/>
+                    <field name="claim_link" widget="url"/>
+                    <field name="veem_attachment_name" widget="url" invisible="1"/>
+                    <field name="veem_attachment_reference" widget="url" invisible="1"/>
+                    <field name="veem_send_invoice_radio" invisible="1"/>
+                    <field name="veem_reference_field" invisible="1"/>
+                    <field name="veem_payment_request_status" invisible="1"/>
+                    <field name="veem_payment_status" invisible="1"/>
+                    <field name="veem_payment_full" invisible="1"/>
+                </group>
+            </group>
+            <xpath expr="//page[@id='other_tab_entry']//field[@name='company_id']" position="before">
+				<group id="veem_payment" name="veem_group" string="Veem" attrs="{'invisible': [('veem_payment_id', '=', False)]}">
+                    <field name="veem_payment_id" attrs="{'invisible': [('veem_payment_id', '=', False)]}"/>
+                    <field name="veem_state"/>
+                    <field name="veem_payment_request_status" invisible="1"/>
+                    <field name="veem_payment_status" invisible="1"/>
+                    <field name="veem_payment_full" invisible="1"/>
+                </group>
+            </xpath>
+            <xpath expr="//group/group[@id='header_right_group']" position="inside">
+              <field name="veem_decorated_state" attrs="{'invisible': [('veem_invoice_id', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="account_move_veem_tree" model="ir.ui.view">
+        <field name="name">veem.account.move.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="veem_state" widget="badge" decoration-success="veem_state == 'paid'" decoration-danger="veem_state == 'error'" decoration-warning="veem_state == 'sent'" decoration-info="veem_state == 'draft'" optional="show"/>
+            </field>
+        </field>
+    </record>
+</data></odoo>
